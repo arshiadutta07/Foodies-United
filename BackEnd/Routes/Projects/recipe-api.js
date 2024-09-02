@@ -4,15 +4,15 @@ const multer = require('multer');
 const path = require('path');
 const { recipeSchema } = require('../../Validations/validation');
 const {auth, authorizeRoles} = require("../../Middlewares/auth-middleware");
-const {getAllUsers, createRecipe, validateIngredients, getAllRecipes, transformRecipeInstructions, getParticularRecipe, checkIfRecipeExists, updateRecipe, deleteRecipe} = require('../../RoutesManagement/RecipeManagement/recipe-management');
+const {getAllUsers, createRecipe, validateIngredients, getAllRecipes, transformRecipeInstructions, getParticularRecipe, checkIfRecipeExists, updateRecipe, deleteRecipe, getAllIngredients, getAllCuisines} = require('../../RoutesManagement/RecipeManagement/recipe-management');
 
 // Configure Multer storage
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, 'uploads/'); // Specify the folder where files will be stored
+      cb(null, 'uploads/');
     },
     filename: (req, file, cb) => {
-      cb(null, Date.now() + path.extname(file.originalname)); // Generate a unique file name
+      cb(null, Date.now() + path.extname(file.originalname));
     },
   });
   
@@ -76,7 +76,7 @@ router.get('/getAllRecipes',  auth, authorizeRoles(['SuperAdmin', 'Admin', 'Clie
     let statusCode = 200;
     try {
         // Step 1: Fetch recipes from the database asynchronously
-        let allRecipies = await getAllRecipes(req.query.page);
+        let allRecipies = await getAllRecipes();
         if(!allRecipies) {
             result.message = "No Recipes Found";
             return res.status(404).send(result);
@@ -114,7 +114,7 @@ router.get('/getAllRecipes',  auth, authorizeRoles(['SuperAdmin', 'Admin', 'Clie
     }
 });
 
-router.get("/getRecipe/:id", auth, authorizeRoles(['SuperAdmin', 'Admin', 'Client']), async(req, res) => {
+router.get("/getRecipe/:id",  async(req, res) => {
     let result = {};
     let statusCode= 200;
     try {
@@ -199,5 +199,34 @@ router.delete("/deleteRecipe/:id", auth, authorizeRoles(['SuperAdmin', 'Admin', 
         res.status(500).send(result);
     }
 });
+
+router.get("/getIngredients",  async(req, res) => {
+    let result = {};
+    try {
+        let ingredients = await getAllIngredients();
+        result.data = ingredients.data;
+        res.status(200).send(result);
+    }
+    catch(ex) {
+        console.log(ex);
+        result.error = `Internal Server Error - ${ex.message ? ex.message : ex}`;
+        res.status(500).send(result);
+    }
+})
+
+router.get("/getCuisines",  async(req, res) => {
+    let result = {};
+    try {
+        let cuisines = await getAllCuisines();
+        result.data = cuisines;
+        res.status(200).send(result.data);
+    }
+    catch(ex) {
+        console.log(ex);
+        result.error = `Internal Server Error - ${ex.message ? ex.message : ex}`;
+        res.status(500).send(result);
+    }
+})
+
 
 module.exports = router;

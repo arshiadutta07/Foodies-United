@@ -9,8 +9,9 @@ router.post("/register", async(req, res) => {
     try {
         let isValidInfo = userSchema.validate(req.body);
         if(isValidInfo.error) {
-            result.validationError = "User Data is not valid";
-            res.status(400).send(result);
+            console.log(isValidInfo.error);
+            result.message = "User Data is not valid";
+            return res.status(400).send(result);
         }
         else {
            let user = await checkUserExists(req.body.userName);
@@ -19,11 +20,11 @@ router.post("/register", async(req, res) => {
                 let verifyResultToken = await generateEmailVerificationDetails(object.data);
                 result.data = object.data;
                 result.emailVerificationToken = verifyResultToken;
-                res.status(200).json(result);
+                return res.status(200).json(result);
            }
            else {
-            result.data = "User Already Exists";
-            res.status(409).send(result);
+            result.message = "User Already Exists";
+            return res.status(409).send(result);
            }
         }
     }

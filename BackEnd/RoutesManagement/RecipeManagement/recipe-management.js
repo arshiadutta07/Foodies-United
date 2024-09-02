@@ -71,7 +71,7 @@ let validateIngredients = function(ingredients) {
   })
 }
 
-let getAllRecipes = function(page) {
+let getAllRecipes = function() {
   return new Promise(async function(resolve, reject) {
       try {
         let recipes = await Recipe.findAll({
@@ -100,7 +100,6 @@ let getAllRecipes = function(page) {
               }
           ],
           order: [['createdAt', 'DESC']],
-          limit: 20,
         });
         
         resolve(recipes);
@@ -224,6 +223,30 @@ function transformRecipeInstructions(instructions) {
   return instructions.split('\n').map((step, index) => `${index + 1}. ${step}`).join('\n');
 }
 
+let getAllIngredients = function() {
+  return new Promise(async function(resolve, reject) {
+      try {
+          let res = await Ingredient.findAll();
+          resolve({success: true, data : res});
+      }
+      catch(ex) {
+          reject(ex);
+      }
+  })
+}
+
+let getAllCuisines = function() {
+  return new Promise(async function(resolve, reject) {
+      try {
+          let res = await Cuisine.findAll();
+          resolve({success: true, data : res});
+      }
+      catch(ex) {
+          reject(ex);
+      }
+  })
+}
+
 module.exports = {
     getAllUsers,
     createRecipe,
@@ -233,5 +256,7 @@ module.exports = {
     getParticularRecipe,
     checkIfRecipeExists,
     updateRecipe,
-    deleteRecipe
+    deleteRecipe,
+    getAllIngredients,
+    getAllCuisines
 }

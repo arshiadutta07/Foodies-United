@@ -1,0 +1,99 @@
+/* Container for the entire list */
+.recipe-list-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Heading for the list */
+  .recipe-list-container h2 {
+    text-align: center;
+    color: #333;
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  /* Error message */
+  .recipe-list-container .error-message {
+    color: red;
+    text-align: center;
+    font-size: 1.2rem;
+  }
+  
+  /* Container for each cuisine group */
+  .cuisine-group {
+    margin-bottom: 30px;
+  }
+  
+  .cuisine-group h3 {
+    background-color: #eaeaea;
+    padding: 10px;
+    border-radius: 5px;
+    color: #333;
+    font-size: 1.5rem;
+    text-align: center;
+  }
+  
+  /* Style for recipe list items */
+  .recipe-list-container ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .recipe-list-container li {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .recipe-list-container h4 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #444;
+  }
+  
+  .recipe-list-container p {
+    font-size: 1rem;
+    color: #666;
+    margin: 10px 0;
+  }
+  
+  /* Style for recipe images */
+  .recipe-list-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+
+  .recipe-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover; /* Ensures the image covers the area without stretching */
+    border-radius: 8px; /* Optional: for rounded corners */
+    margin-top: 8px; /* Optional: add some space between the text and the image */
+  }
+
+  .recipe-buttons {
+    margin-top: 10px;
+  }
+  
+  .recipe-buttons button {
+    margin-right: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+    width : 10em
+  }
+
+  .view {
+    background-color: rgb(94, 94, 141);
+  }
+  .update {
+    background-color: rgb(227, 227, 108);
+  }
+  

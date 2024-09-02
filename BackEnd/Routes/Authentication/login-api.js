@@ -20,11 +20,11 @@ router.post("/login", async(req, res) => {
                 let isPasswordCorrect = await checkUserPassword(req.body.password, user.password);
                 if(isPasswordCorrect) {
                     let token = generateToken(user);
-                    result.data = {id : user.id, message : "User Authenticated!"};
+                    result.data = {id : user.id, message : "User Authenticated!", authToken : token};
                     res.setHeader('Set-Cookie', cookie.serialize('Authorization', token, {
                         httpOnly: true,
                         maxAge: 900000,
-                        sameSite: 'strict',
+                        sameSite: 'none',
                         path: '/',
                       })).status(200).send(result);
                 }

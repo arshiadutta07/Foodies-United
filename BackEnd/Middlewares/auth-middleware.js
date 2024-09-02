@@ -6,8 +6,13 @@ let auth = function(req, res, next) {
     try {
         let secretKey = process.env.JWT_SECRET_KEY;
         if(req.headers["cookie"]) {
-            let token = req.headers["cookie"].split('=')[1];
-            token = token.split(';')[0];
+            const cookies = req.headers["cookie"].split('; ');
+            const authTokenCookie = cookies.find(cookie => cookie.startsWith('authToken='));
+            let token;
+            if (authTokenCookie) {
+               token = authTokenCookie.split('=')[1];
+            }
+            
             jwt.verify(token, secretKey, function(err, decoded) {
                 if (err) {
                     result.error = `Unauthorized User - ${err.message}. Please login again!`;
